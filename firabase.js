@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, verifyIdToken } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import dotenv from 'dotenv';
+import { generateToken } from "./services/newsServices.js";
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ const auth = getAuth(app);
 export async function createUser(email, password) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log("User Register:", userCredential.user.uid);
+      console.log("User Register:", userCredential.user.uid, `TOKEN: ${generateToken(userCredential.user.uid)}`);
       return userCredential.user;
     } catch (error) {
       console.error("Error:", error.message);
@@ -31,31 +32,10 @@ export async function createUser(email, password) {
 export async function logInUser(email, password) {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("User log:", userCredential.user.uid);
+      console.log("User log:", userCredential.user.uid, `TOKEN: ${generateToken(userCredential.user.uid)}`);
       return userCredential.user;
     } catch (error) {
       console.error("Error:", error.message);
       throw new Error (error.message);
     }
 }
-
-
-// Middleware
-export const checkToken = async (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1];
-  
-    if (!token) {
-      return res.status(401).json({ error: 'Token not in the headers' });
-    }
-  
-    try {
-      const decodedToken = await verifyIdToken(auth, token);
-  
-      req.user = decodedToken;
-  
-      next();
-    } catch (error) {
-      console.error('Error:', error);
-      return res.status(500).json({ error: 'Token not good' });
-    }
-  };

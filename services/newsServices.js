@@ -1,23 +1,60 @@
 import axios from 'axios';
-import { query } from 'express';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
-const NEWS_API_KEY= process.env.NEWS_API_KEY;
-const BASE_URL= 'https://newsapi.org/v2'
+dotenv.config();
 
-const fetch = async (query='', category='', pageSize=10)=>{
+const NEWS_API_KEY = process.env.NEWS_API_KEY;
+console.log(NEWS_API_KEY);
+
+export const fetchNews = async (category = '', country = '', pageSize = 10) => {
     try{
-        const response = await axios.get(`${BASE_URL}/everything`,{
+        const response = await axios.get(`${process.env.BASE_URL}/top-headlines`,{
             params:{
-                q:query,
+                country,
                 category,
-                pageSize,
                 apiKey: NEWS_API_KEY,
+                pageSize
             },
         });
-        return response.data.articles;
+        console.log(response.data);
+        return response.data;
     }catch(error){
-        console.error('Error fetching news:', error.message);
+        console.error('Error fetching news:', error);
         throw new Error('Unable to fetch new from API')
     }
 };
-module.exports = { fetchNews };
+
+export const checkToken = (req, res, next) => {
+    const token = req.headers['authorization']?.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ error: 'Token not found' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
+
+        const uid = decoded.sub;
+        req.user = { uid };
+
+        next();
+
+    } catch (error) {
+        console.error('Error verifying token:', error.message);
+        return res.json({
+            success: false,
+            message: error.message,
+        });
+    }
+};
+
+export const generateToken = (uid) => {
+    const payload = {
+        sub: uid,
+        iat: Math.floor(Date.now() / 1000),
+        exp: Math.floor(Date.now() / 1000) + (5 * 60 * 60),
+    };
+
+    return jwt.sign(payload, process.env.SECRET_KEY);
+};

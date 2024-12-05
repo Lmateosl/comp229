@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import newsRoutes from './routes/newsRoutes.js';
 import auth from './routes/auth.js';
-import { checkToken } from './firabase.js';
+import { checkToken } from './services/newsServices.js';
 
 dotenv.config();
 
