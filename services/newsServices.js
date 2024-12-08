@@ -17,7 +17,7 @@ export const fetchNews = async (category = '', country = '', pageSize = 10) => {
                 pageSize
             },
         });
-        console.log(response.data);
+        //console.log(response.data);
         return response.data;
     }catch(error){
         console.error('Error fetching news:', error);
