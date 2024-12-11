@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import newsRoutes from './routes/newsRoutes.js';
 import auth from './routes/auth.js';
+import favorites from './routes/favorites.js';
 import { checkToken } from './services/newsServices.js';
 
 dotenv.config();
@@ -20,7 +21,9 @@ app.get('/', (req, res) => {
 
 // Mount the newsRoutes at /api/news
 app.use('/api/news', checkToken);
+app.use('/api/favorites', checkToken);
 app.use('/api/news', newsRoutes);
+app.use('/api/favorites', favorites);
 app.use('/api/auth', auth);
 
 app.listen(PORT, () => {
