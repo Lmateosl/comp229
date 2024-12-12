@@ -1,71 +1,45 @@
-News Aggregator App
-
-A streamlined web application focused on news aggregation, allowing users to browse and bookmark curated news articles. The app ensures secure access through Firebase Authentication and provides a responsive design suitable for various devices.
+News Aggregator App - Backend
+A powerful server-side application that provides APIs to handle user authentication, fetch curated news articles, and support bookmarking functionality. The backend ensures secure access with Firebase Authentication and handles communication with the NewsAPI for fetching dynamic news content.
 
 Features
-
-User Registration and Login: Secure account creation and login powered by Firebase Authentication.
-
-Custom Tokens: Generates session tokens for authenticated users for enhanced security.
-
-News Feeds: Fetches and displays curated articles from the NewsAPI.
-
-Bookmarking: Save articles for future reference.
-
-Responsive Design: Accessible on mobile, tablet, and desktop devices.
-
+User Registration and Login: Secure account creation and authentication powered by Firebase Authentication.
+Custom Tokens: Generates secure session tokens for authenticated users.
+News Feeds: Fetches and processes curated articles from the NewsAPI.
+APIs: Provides RESTful API endpoints for front-end integration.
 Tech Stack
-
-Frontend
-
-React: Component-based UI development.
-
-Axios: HTTP client for API requests.
-
-CSS/SCSS: Responsive and modern styling.
-
 Backend
-
 Node.js: JavaScript runtime for server-side logic.
-
 Express.js: Framework for creating RESTful APIs.
-
-Firebase Authentication: Secure user registration and login.
-
-JWT: Generates secure session tokens for users.
-
+Firebase Authentication: Secure user authentication and session management.
+JWT: Token-based authentication for secure user sessions.
 APIs
-
-NewsAPI: Fetches news articles from reliable sources.
-
+NewsAPI: Fetches news articles from reliable sources based on user search queries.
 Installation
-
-Backend Setup
-
-Clone the repository:
-
-git clone https://github.com/<your-username>/news-app.git
-cd news-app
-
-Install dependencies:
-
+Clone the Repository
+bash
+Copy code
+git clone https://github.com/<your-username>/news-app-backend.git
+cd news-app-backend
+Install Dependencies
+bash
+Copy code
 npm install
+Configure Environment Variables
+Create a .env file in the root directory and include the following:
 
-Create a .env file with the required configuration:
-
+plaintext
+Copy code
 NEWS_API_KEY=your_news_api_key_here
 FIREBASE_API_KEY=your_firebase_api_key_here
-
-Start the backend server:
-
+Start the Server
+bash
+Copy code
 npm start
-
+Available Scripts
+npm start: Starts the backend server.
+npm run dev: Starts the server in development mode with hot-reloading.
+npm test: Runs tests for the backend APIs.
 Future Improvements
-
-Enhance news categorization.
-
-Add user preferences for personalized news feeds.
-
-Implement advanced search functionality.
-
-
+News Categorization: Enhance API logic for better categorization of news articles.
+User Preferences: Add user preferences to deliver personalized news feeds.
+Advanced Search: Implement more robust and flexible search functionalities.
