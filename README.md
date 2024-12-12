@@ -1,4 +1,4 @@
-#News Aggregator App
+News Aggregator App
 
 A streamlined web application focused on news aggregation, allowing users to browse and bookmark curated news articles. The app ensures secure access through Firebase Authentication and provides a responsive design suitable for various devices.
 
